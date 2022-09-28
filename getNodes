@@ -4,7 +4,12 @@ f = open("nodeInfo.txt")
 nl = [x.strip() for x in f]
 nl = [int(x[3:]) for x in nl[1:]]
 
+print()
+
 nn = len(nl)
+if not nn:
+    print("No free nodes found :(\n")
+    exit()
 
 bl = []
 i = 0
