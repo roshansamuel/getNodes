@@ -1,0 +1,48 @@
+#!/usr/bin/env python3
+
+f = open("nodeInfo.txt")
+nl = [x.strip() for x in f]
+nl = [int(x[3:]) for x in nl[1:]]
+
+nn = len(nl)
+
+bl = []
+i = 0
+sl = [nl[i]]
+while i < nn-1:
+    if nl[i+1] - nl[i] == 1:
+        sl.append(nl[i+1])
+    else:
+        bl.append(sl)
+        sl = [nl[i+1]]
+    i += 1
+else:
+    bl.append(sl)
+
+bl = [("nid{0:05d}".format(x[0]), "nid{0:05d}".format(x[-1]), len(x)) for x in bl if len(x) > 1]
+
+fl = []
+for i in bl:
+    ss = ''.join([i[0][k] for k in range(len(i[0])) if i[0][k]==i[1][k]])
+    fs = ss + "[" + i[0][len(ss):] + "-" + i[1][len(ss):] + "]"
+    fl.append((fs, i[2], i[0]))
+
+prInd = 0
+rlInd = 0
+rowLims = [0, 1919, 3839, 5759, 7679, 10000]
+for i in fl:
+    sn = int(i[2][3:])
+    if ((sn >= rowLims[rlInd]) and (sn < rowLims[rlInd+1])):
+        print("\n")
+        rlInd += 1
+    if prInd%5:
+        print("{0:3d}\t{1:16s}".format(i[1], i[0] + ","), end=" ")
+    else:
+        print("{0:3d}\t{1:16s}".format(i[1], i[0]))
+    prInd += 1
+
+print("\n")
+print("Free nodes: {0:4d}".format(nn))
+print()
+print("Use the above info with data available at: http://home.iitk.ac.in/~anandogc/nid_marker.html")
+print()
