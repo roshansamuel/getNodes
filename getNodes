@@ -35,6 +35,9 @@ if __name__ == '__main__':
         bl.append(sl)
 
     bl = [("nid{0:05d}".format(x[0]), "nid{0:05d}".format(x[-1]), len(x)) for x in bl if len(x) > 1]
+    if not len(bl):
+        print("No free blocks of size greater than 1 :(\n")
+        exit()
 
     fl = []
     for i in bl:
